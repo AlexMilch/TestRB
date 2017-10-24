@@ -45,6 +45,6 @@ public class MainActivityPresenter {
     }
 
     private List<BookModel> convert(BooksModel booksModel) {
-        return booksModel.getBooks();
+        return booksModel.getItems();
     }
 }

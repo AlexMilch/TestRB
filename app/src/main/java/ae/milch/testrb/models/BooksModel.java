@@ -5,20 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class BooksModel {
-    @SerializedName("kind")
-    private String kind;
     @SerializedName("totalItems")
     private int totalItems;
     @SerializedName("items")
-    private List<BookModel> books;
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
+    private List<BookModel> items;
 
     public int getTotalItems() {
         return totalItems;
@@ -28,11 +18,11 @@ public class BooksModel {
         this.totalItems = totalItems;
     }
 
-    public List<BookModel> getBooks() {
-        return books;
+    public List<BookModel> getItems() {
+        return items;
     }
 
-    public void setBooks(List<BookModel> books) {
-        this.books = books;
+    public void setItems(List<BookModel> items) {
+        this.items = items;
     }
 }
