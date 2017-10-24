@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorGrey"
@@ -38,9 +39,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_toEndOf="@+id/iv_book"
+                android:layout_toLeftOf="@+id/btn_on_favorites"
                 android:layout_toRightOf="@+id/iv_book"
-                android:text="Гарри Поттер и даггер 2"
-                android:textSize="14sp" />
+                android:layout_toStartOf="@+id/btn_on_favorites"
+                android:textSize="14sp"
+                tools:text="Гарри Поттер и даггер 2" />
 
             <TextView
                 android:id="@+id/tv_authors"
@@ -52,8 +55,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/iv_book"
                 android:layout_toRightOf="@+id/iv_book"
-                android:text="Джоан Роулинг Андроидовна"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="Джоан Роулинг Андроидовна" />
 
             <TextView
                 android:id="@+id/tv_load_fragment"
@@ -65,23 +68,25 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/iv_book"
                 android:layout_toRightOf="@+id/iv_book"
-                android:text="https://pottergarry/dagger/com"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="https://pottergarry/dagger/com" />
 
-            <Button
+            <ImageView
+                android:padding="5dp"
                 android:id="@+id/btn_on_favorites"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignTop="@+id/iv_book"
                 android:layout_marginEnd="11dp"
                 android:layout_marginRight="11dp"
-                android:background="@drawable/ic_favorites" />
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_star_black_24dp"
+                tools:ignore="ContentDescription" />
+
         </RelativeLayout>
 
-
     </android.support.v7.widget.CardView>
-
 
 </RelativeLayout>

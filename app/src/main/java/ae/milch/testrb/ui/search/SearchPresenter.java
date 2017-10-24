@@ -1,4 +1,4 @@
-package ae.milch.testrb.ui;
+package ae.milch.testrb.ui.search;
 
 import java.util.List;
 
@@ -11,34 +11,37 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivityPresenter {
+class SearchPresenter {
 
-    private final MainActivityView view;
+    private static final String SEARCH_QUERY_PARAM_MASK = "search+%s";
 
-    public MainActivityPresenter(MainActivityView view) {
+    private final SearchView view;
+    private final ApiService apiService;
+
+    SearchPresenter(SearchView view) {
         this.view = view;
+        this.apiService = new NetworkModule().createService();
     }
 
-    public void searchBook(String text) {
-        ApiService apiService = new NetworkModule().createService();
-        apiService.searchBook("search+" + text)
-                .subscribeOn(Schedulers.computation())
+    void searchBook(String text) {
+        apiService.searchBook(String.format(SEARCH_QUERY_PARAM_MASK, text))
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<BooksModel, List<BookModel>>() {
                     @Override
-                    public List<BookModel> apply(BooksModel booksModel) throws Exception {
-                        return MainActivityPresenter.this.convert(booksModel);
+                    public List<BookModel> apply(BooksModel booksModel) {
+                        return convert(booksModel);
                     }
                 })
                 .subscribe(new Consumer<List<BookModel>>() {
                                @Override
-                               public void accept(List<BookModel> book) throws Exception {
+                               public void accept(List<BookModel> book) {
                                    view.outputListBooks(book);
                                }
                            },
                         new Consumer<Throwable>() {
                             @Override
-                            public void accept(Throwable throwable) throws Exception {
+                            public void accept(Throwable throwable) {
                                 throwable.printStackTrace();
                             }
                         });

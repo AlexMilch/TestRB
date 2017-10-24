@@ -1,4 +1,4 @@
-package ae.milch.testrb.ui;
+package ae.milch.testrb.ui.search;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,21 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ae.milch.testrb.R;
 import ae.milch.testrb.models.BookModel;
 
-public class SearchFragment extends Fragment implements MainActivityView{
+public class SearchFragment extends Fragment implements SearchView {
 
     private EditText etSearch;
     private Button btnSearch;
     private RecyclerView rvSearch;
 
-    private BooksAdapter booksAdapter;
+    private SearchAdapter searchAdapter;
 
-    private MainActivityPresenter presenter = new MainActivityPresenter(this);
+    private SearchPresenter presenter = new SearchPresenter(this);
 
     @Nullable
     @Override
@@ -36,8 +35,8 @@ public class SearchFragment extends Fragment implements MainActivityView{
         btnSearch = view.findViewById(R.id.btn_search);
         rvSearch = view.findViewById(R.id.rv_search);
         rvSearch.setLayoutManager(new LinearLayoutManager(getContext()));
-        booksAdapter = new BooksAdapter();
-        rvSearch.setAdapter(booksAdapter);
+        searchAdapter = new SearchAdapter();
+        rvSearch.setAdapter(searchAdapter);
         return view;
     }
 
@@ -57,7 +56,7 @@ public class SearchFragment extends Fragment implements MainActivityView{
 
     @Override
     public void outputListBooks(List<BookModel> books) {
-        booksAdapter.initBooks(books);
-        booksAdapter.notifyDataSetChanged();
+        searchAdapter.initBooks(books);
+        searchAdapter.notifyDataSetChanged();
     }
 }

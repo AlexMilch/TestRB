@@ -1,10 +1,10 @@
-package ae.milch.testrb.ui;
+package ae.milch.testrb.ui.search;
 
 import java.util.List;
 
 import ae.milch.testrb.models.BookModel;
 
-public interface MainActivityView {
+interface SearchView {
 
     void outputListBooks(List<BookModel> bookModel);
 }

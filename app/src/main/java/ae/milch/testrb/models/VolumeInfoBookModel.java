@@ -12,6 +12,8 @@ public class VolumeInfoBookModel {
     private ArrayList<String> authors;
     @SerializedName("imageLinks")
     private ImageLinksBookModel imageLinks;
+    @SerializedName("description")
+    private String description;
     @SerializedName("previewLink")
     private String previewLink;
 
@@ -37,6 +39,14 @@ public class VolumeInfoBookModel {
 
     public void setImageLinks(ImageLinksBookModel imageLinks) {
         this.imageLinks = imageLinks;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPreviewLink() {
