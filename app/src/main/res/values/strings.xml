@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TestRB</string>
+    <string name="search">Поиск</string>
+    <string name="favorites">Избранное</string>
 </resources>
