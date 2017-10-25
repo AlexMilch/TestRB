@@ -31,16 +31,7 @@ class FavoritesPresenter {
         });
         realm.close();
         getFavoriteBooks();
-//        getAllBooks();
     }
-
-//    void getAllBooks() {
-//        Realm realm = Realm.getDefaultInstance();
-//        List<Book> books = realm.copyFromRealm(realm.where(Book.class)
-//                .findAll());
-//        realm.close();
-//        view.outputListBooks(books);
-//    }
 
     void getFavoriteBooks() {
         Realm realm = Realm.getDefaultInstance();

@@ -7,7 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class App extends Application{
+public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

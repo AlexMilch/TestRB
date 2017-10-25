@@ -47,15 +47,15 @@ public class SearchFragment extends Fragment implements SearchView {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(etSearch.getText().toString().isEmpty())) {
                     searchBook(etSearch.getText().toString());
-                }
             }
         });
     }
 
     public void searchBook(String text) {
-        presenter.searchBook(text);
+        if (!text.isEmpty()) {
+            presenter.searchBook(text);
+        }
     }
 
     @Override
