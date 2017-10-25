@@ -84,6 +84,16 @@ class SearchPresenter {
         realm.close();
     }
 
+    public boolean checkFavorite(String id) {
+        Realm realm = Realm.getDefaultInstance();
+        Book book = realm.where(Book.class)
+                .equalTo("id", id)
+                .findFirst();
+        boolean isFavorite = book != null && book.isFavorite();
+        realm.close();
+        return isFavorite;
+    }
+
     private String getAllAuthors(BookModel book) {
         if (book.getVolumeInfo().getAuthors() == null) {
             return "нет автора";

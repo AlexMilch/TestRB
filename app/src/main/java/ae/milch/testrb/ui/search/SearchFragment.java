@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         rvSearch.setLayoutManager(new LinearLayoutManager(getContext()));
-        searchAdapter = new SearchAdapter(this);
+        searchAdapter = new SearchAdapter(this, presenter);
         rvSearch.setAdapter(searchAdapter);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,10 @@ public class SearchFragment extends Fragment implements SearchView {
     @Override
     public void onFavoriteClick(BookModel bookModel) {
         presenter.changeFavorite(bookModel);
+        searchAdapter.notifyDataSetChanged();
+    }
+
+    public void updateList() {
         searchAdapter.notifyDataSetChanged();
     }
 }

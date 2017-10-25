@@ -50,4 +50,8 @@ public class FavoritesFragment extends Fragment implements FavoritesView {
     public void onFavoriteClick(boolean favorite, String id) {
         presenter.changeFavorite(favorite, id);
     }
+
+    public void updateList() {
+        presenter.getFavoriteBooks();
+    }
 }

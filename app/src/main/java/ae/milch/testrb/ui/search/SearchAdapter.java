@@ -16,18 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ae.milch.testrb.R;
-import ae.milch.testrb.models.Book;
 import ae.milch.testrb.models.BookModel;
 import ae.milch.testrb.models.ImageLinksBookModel;
-import io.realm.Realm;
 
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> {
 
     private List<BookModel> books;
     private SearchView view;
+    private SearchPresenter presenter;
 
-    SearchAdapter(SearchView view) {
+    SearchAdapter(SearchView view, SearchPresenter presenter) {
         this.view = view;
+        this.presenter = presenter;
         this.books = new ArrayList<>();
     }
 
@@ -50,8 +50,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> 
         if (imageLinks != null && imageLinks.getSmallThumbnail() != null) {
             holder.ivBook.setImageURI(Uri.parse(imageLinks
                     .getSmallThumbnail()));
-        }
-        else {
+        } else {
             holder.ivBook.setImageResource(R.drawable.ic_broken_book);
         }
         holder.tvTitle.setText(bookModel.getVolumeInfo().getTitle());
@@ -82,18 +81,9 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> 
     }
 
     private int checkFavorite(String id) {
-        int state;
-        Realm realm = Realm.getDefaultInstance();
-        final Book book = realm.where(Book.class)
-                .equalTo("id", id)
-                .findFirst();
-        if (book != null) {
-            return book.isFavorite()
-                    ? R.drawable.ic_star
-                    : R.drawable.ic_star_border;
-        } else {
-            return R.drawable.ic_star_border;
-        }
+        return presenter.checkFavorite(id)
+                ? R.drawable.ic_star
+                : R.drawable.ic_star_border;
     }
 
     @Override
