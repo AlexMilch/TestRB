@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="1dp"
         app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="2dp">
+        app:cardCornerRadius="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,17 +24,17 @@
                 android:id="@+id/iv_book"
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorYellow" />
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_broken_book"
+                android:background="@color/colorGrey" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_book"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -42,8 +42,9 @@
                 android:layout_toLeftOf="@+id/btn_on_favorites"
                 android:layout_toRightOf="@+id/iv_book"
                 android:layout_toStartOf="@+id/btn_on_favorites"
+                android:textColor="@android:color/black"
                 android:textSize="14sp"
-                tools:text="Гарри Поттер и даггер 2" />
+                tools:text="Гарри Поттер " />
 
             <TextView
                 android:id="@+id/tv_authors"
@@ -52,10 +53,9 @@
                 android:layout_below="@+id/tv_title"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/iv_book"
                 android:layout_toRightOf="@+id/iv_book"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 tools:text="Джоан Роулинг Андроидовна" />
 
             <TextView
@@ -69,20 +69,18 @@
                 android:layout_toEndOf="@+id/iv_book"
                 android:layout_toRightOf="@+id/iv_book"
                 android:textSize="14sp"
-                tools:text="https://pottergarry/dagger/com" />
+                tools:text="Ссылка на загрузку фрагмента книги"
+                tools:textColor="@color/colorRed" />
 
             <ImageView
-                android:padding="5dp"
                 android:id="@+id/btn_on_favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/iv_book"
-                android:layout_marginEnd="11dp"
-                android:layout_marginRight="11dp"
-                android:background="?selectableItemBackground"
-                android:src="@drawable/ic_star_black_24dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="5dp"
+                android:src="@drawable/ic_star"
                 tools:ignore="ContentDescription" />
 
         </RelativeLayout>

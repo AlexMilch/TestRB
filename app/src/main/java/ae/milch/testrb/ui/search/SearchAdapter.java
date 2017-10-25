@@ -1,8 +1,9 @@
 package ae.milch.testrb.ui.search;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,16 @@ import java.util.List;
 import ae.milch.testrb.R;
 import ae.milch.testrb.models.Book;
 import ae.milch.testrb.models.BookModel;
+import ae.milch.testrb.models.ImageLinksBookModel;
 import io.realm.Realm;
 
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> {
 
     private List<BookModel> books;
+    private SearchView view;
 
-    SearchAdapter() {
+    SearchAdapter(SearchView view) {
+        this.view = view;
         this.books = new ArrayList<>();
     }
 
@@ -40,45 +44,32 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> 
         if (bookModel == null) {
             return;
         }
-        final String smallThumbnail = bookModel.getVolumeInfo().getImageLinks().getSmallThumbnail();
-        holder.ivBook.setImageURI(Uri.parse(smallThumbnail));
-        final String title = bookModel.getVolumeInfo().getTitle();
-        holder.tvTitle.setText(title);
-        final String allAuthors = getAllAuthors(bookModel);
-        holder.authors.setText(allAuthors);
-        final String previewLink = bookModel.getVolumeInfo().getPreviewLink();
-        holder.loadFragment.setText(previewLink);
+        ImageLinksBookModel imageLinks = bookModel
+                .getVolumeInfo()
+                .getImageLinks();
+        if (imageLinks != null && imageLinks.getSmallThumbnail() != null) {
+            holder.ivBook.setImageURI(Uri.parse(imageLinks
+                    .getSmallThumbnail()));
+        }
+        else {
+            holder.ivBook.setImageResource(R.drawable.ic_broken_book);
+        }
+        holder.tvTitle.setText(bookModel.getVolumeInfo().getTitle());
+        holder.authors.setText(getAllAuthors(bookModel));
+        String linkFragment = bookModel.getVolumeInfo().getPreviewLink();
+        holder.loadFragment.setText(Html.fromHtml("<a href=" + linkFragment + "><font color=#3366BB>Ссылка на загрузку фрагмента книги</font></a>"));
+        holder.loadFragment.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.onFavorites.setImageResource(checkFavorite(bookModel.getId()));
         holder.onFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Realm realm = Realm.getDefaultInstance();
-                final Book book = realm.where(Book.class)
-                        .equalTo("id", bookModel.getId())
-                        .findFirst();
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(@NonNull Realm realm) {
-                        if (book != null) {
-                            book.setFavorite(!book.isFavorite());
-                        } else {
-                            Book bookNew = new Book();
-                            bookNew.setFavorite(true);
-                            bookNew.setAuthors(allAuthors);
-                            bookNew.setSmallThumbnail(smallThumbnail);
-                            bookNew.setTitle(title);
-                            bookNew.setPreviewLink(previewLink);
-                            bookNew.setId(bookModel.getId());
-                            realm.copyToRealm(bookNew);
-                        }
-                    }
-                });
-                realm.close();
+                view.onFavoriteClick(bookModel);
             }
         });
     }
 
     private String getAllAuthors(BookModel book) {
-        if (book.getVolumeInfo().getAuthors() == null){
+        if (book.getVolumeInfo().getAuthors() == null) {
             return "нет автора";
         }
         int sizeAuthors = book.getVolumeInfo().getAuthors().size();
@@ -88,6 +79,21 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BooksViewHolder> 
             listAuthors = listAuthors + book.getVolumeInfo().getAuthors().get(i);
         }
         return listAuthors;
+    }
+
+    private int checkFavorite(String id) {
+        int state;
+        Realm realm = Realm.getDefaultInstance();
+        final Book book = realm.where(Book.class)
+                .equalTo("id", id)
+                .findFirst();
+        if (book != null) {
+            return book.isFavorite()
+                    ? R.drawable.ic_star
+                    : R.drawable.ic_star_border;
+        } else {
+            return R.drawable.ic_star_border;
+        }
     }
 
     @Override

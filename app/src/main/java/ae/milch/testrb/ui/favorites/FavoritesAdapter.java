@@ -2,6 +2,8 @@ package ae.milch.testrb.ui.favorites;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,20 +39,29 @@ class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesVi
     @Override
     public void onBindViewHolder(final FavoritesViewHolder holder, int position) {
         final Book book = books.get(position);
-
-        holder.ivBook.setImageURI(Uri.parse(book.getSmallThumbnail()));
+        if (book.getSmallThumbnail() != null) {
+            holder.ivBook.setImageURI(Uri.parse(book.getSmallThumbnail()));
+        } else {
+            holder.ivBook.setImageResource(R.drawable.ic_broken_book);
+        }
         holder.tvTitle.setText(book.getTitle());
         holder.authors.setText(book.getAuthors());
-        holder.loadFragment.setText(book.getPreviewLink());
-        holder.onFavorites.setImageResource(book.isFavorite()
-                ? R.drawable.ic_star_black_24dp
-                : R.drawable.ic_star_border_black_24dp);
+        String linkFragment = book.getPreviewLink();
+        holder.loadFragment.setText(Html.fromHtml("<a href=" + linkFragment + "><font color=#AAA>Ссылка на загрузку фрагмента книги</font></a>"));
+        holder.loadFragment.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.onFavorites.setImageResource(getResId(book));
         holder.onFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.onFavoriteClick(!book.isFavorite(), book.getId());
             }
         });
+    }
+
+    private int getResId(Book book) {
+        return book.isFavorite()
+                ? R.drawable.ic_star
+                : R.drawable.ic_star_border;
     }
 
     @Override

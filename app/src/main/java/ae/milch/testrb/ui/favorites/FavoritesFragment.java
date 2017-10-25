@@ -20,10 +20,10 @@ public class FavoritesFragment extends Fragment implements FavoritesView {
     private FavoritesAdapter favoritesAdapter;
     private FavoritesPresenter presenter;
 
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         rvFavorites = view.findViewById(R.id.rv_favorites);
         return view;

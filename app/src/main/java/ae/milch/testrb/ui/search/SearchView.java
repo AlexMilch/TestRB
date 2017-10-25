@@ -7,4 +7,6 @@ import ae.milch.testrb.models.BookModel;
 interface SearchView {
 
     void outputListBooks(List<BookModel> bookModel);
+
+    void onFavoriteClick(BookModel bookModel);
 }
